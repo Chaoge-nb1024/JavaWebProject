@@ -18,12 +18,10 @@ public class Consumer {
 
     /**
      * 全参构造器
-     * @param consumerId 消费者编号
      * @param userId 用户编号
      * @param consumerName 用户名称
      */
-    public Consumer(Integer consumerId, Integer userId, String consumerName) {
-        this.consumerId = consumerId;
+    public Consumer(Integer userId, String consumerName) {
         this.userId = userId;
         this.consumerName = consumerName;
     }

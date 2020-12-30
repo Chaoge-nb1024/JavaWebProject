@@ -19,13 +19,11 @@ public class LogisticsCompany {
 
     /**
      * 全参构造器
-     * @param logisticsCompanyId 物流公司编号
      * @param userId 用户编号
      * @param logisticsCompanyName 物流公司名称
      * @param logisticsCompanyPrice 物流公司的寄件价格
      */
-    public LogisticsCompany(Integer logisticsCompanyId, Integer userId, String logisticsCompanyName, Integer logisticsCompanyPrice) {
-        this.logisticsCompanyId = logisticsCompanyId;
+    public LogisticsCompany(Integer userId, String logisticsCompanyName, Integer logisticsCompanyPrice) {
         this.userId = userId;
         this.logisticsCompanyName = logisticsCompanyName;
         this.logisticsCompanyPrice = logisticsCompanyPrice;

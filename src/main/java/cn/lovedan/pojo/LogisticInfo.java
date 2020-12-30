@@ -26,7 +26,6 @@ public class LogisticInfo {
 
     /**
      * 全参构造器
-     * @param courierId 快递单号
      * @param userId 用户编号
      * @param logisticsCompanyName 物流公司名称
      * @param senderName 寄件人姓名
@@ -36,8 +35,7 @@ public class LogisticInfo {
      * @param currentAddress 快递当前所在地址
      * @param orderTime 下单时间
      */
-    public LogisticInfo(Long courierId, Integer userId, String logisticsCompanyName, String senderName, String senderTel, String recipientName, String recipientTel, String currentAddress, Date orderTime) {
-        this.courierId = courierId;
+    public LogisticInfo(Integer userId, String logisticsCompanyName, String senderName, String senderTel, String recipientName, String recipientTel, String currentAddress, Date orderTime) {
         this.userId = userId;
         this.logisticsCompanyName = logisticsCompanyName;
         this.senderName = senderName;

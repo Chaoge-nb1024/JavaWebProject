@@ -20,13 +20,12 @@ public class User {
 
     /**
      * 全参构造器
-     * @param userId 用户编号
      * @param userName 用户名
      * @param userPwd 用户密码
      * @param userTel 用户手机号码
      * @param userIdentity 用户身份
      */
-    public User(Integer userId, String userName, String userPwd, String userTel, Boolean userIdentity) {
+    public User(String userName, String userPwd, String userTel, Boolean userIdentity) {
         this.userId = userId;
         this.userName = userName;
         this.userPwd = userPwd;
