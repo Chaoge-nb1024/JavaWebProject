@@ -9,6 +9,18 @@
 <html>
 <head>
     <title>物流管理系统-注册页面</title>
+    <script>
+        function loadXMLDoc(){
+            var xmlhttp;
+            if (window.XMLHttpRequest) {
+                //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // IE6, IE5 浏览器执行代码
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+    </script>
 </head>
 <body>
     <center>

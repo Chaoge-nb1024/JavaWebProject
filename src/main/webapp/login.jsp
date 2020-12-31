@@ -13,7 +13,7 @@
 </head>
 <body>
 <center>
-    <form action="" method="post">
+    <form action="/login" method="post">
         <table border="1px" cellspacing="0px">
             <caption style="font-family: 微软雅黑; font-size: 24px">登录界面</caption>
             <tr>

@@ -22,6 +22,7 @@ public class UserRegisterServlet extends HttpServlet {
         // 2¡¢×¢²áÓÃ»§
         UserDAO userDAO = new UserDAO();
         boolean result = userDAO.userRegister(user);
+        userDAO.userRegister(user);
 
         // 3¡¢ÏìÓ¦
         response.setContentType("text/html;charset=UTF-8");

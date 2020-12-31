@@ -1,7 +1,11 @@
 package cn.lovedan.util;
 
+import org.apache.commons.beanutils.BeanUtils;
+
 import java.io.InputStream;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -34,7 +38,7 @@ public class DBUtils {
     /**
      * 保存数据至数据库中
      * @param sql SQL语句
-     * @param args SQL语句中限定条件
+     * @param args SQL语句限定条件
      * @return 返回true，保存成功；返回false，保存失败
      */
     public static boolean save(String sql, Object... args) {
@@ -90,6 +94,57 @@ public class DBUtils {
             close(conn, ps, rs);
         }
         return count;
+    }
+
+    /**
+     * 查询返回一个指定对象
+     * @param clazz 对象类型
+     * @param sql SQL语句
+     * @param args SQL语句限定条件
+     * @param <T> 泛型参数
+     * @return T 类型对象
+     */
+    public static <T> T getSingleObject(Class<T> clazz, String sql, Object... args) {
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        T instance = null;
+        try {
+            conn = getConnection();
+            ps = conn.prepareStatement(sql);
+            if (args != null && args.length > 0) {
+                for (int i = 0; i < args.length; i++) {
+                    ps.setObject(i+1, args[i]);
+                }
+            }
+            rs = ps.executeQuery();
+            // 获得结果集元数据
+            ResultSetMetaData metaData = rs.getMetaData();
+            // 获得当前结果集的列数
+            int columnNum = metaData.getColumnCount();
+            // 处理结果集
+            while (rs.next()) {
+                // key 存放列名，value存放列值
+                Map<String, Object> rowMap = new HashMap<>();
+                for (int i = 1; i <= columnNum; i++) {
+                    String columnName = metaData.getColumnLabel(i);
+                    Object columnValue = rs.getObject(columnName    );
+                    rowMap.put(columnName, columnValue);
+                }
+                instance = clazz.newInstance();
+                for (Map.Entry<String, Object> entry : rowMap.entrySet()) {
+                    String propertyName = entry.getKey();
+                    Object propertyValue = entry.getValue();
+                    // 使用 apache.commons.beanutils 包下的工具类进行对象赋值操作
+                    BeanUtils.setProperty(instance, propertyName, propertyValue);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            close(conn, ps, rs);
+        }
+        return instance;
     }
 
     /**

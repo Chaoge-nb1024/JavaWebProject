@@ -1,11 +1,13 @@
 package cn.lovedan.pojo;
 
+import java.io.Serializable;
+
 /**
  * 物流公司类
  * @author dan's lover
  * @version 1.0
  */
-public class LogisticsCompany {
+public class LogisticsCompany implements Serializable {
     private Integer logisticsCompanyId;     // 公司编号，主键
     private Integer userId;                 // 用户编号，外键
     private String logisticsCompanyName;    // 用户名称
