@@ -12,6 +12,26 @@
         <servlet-name>UserLoginServlet</servlet-name>
         <servlet-class>cn.lovedan.controller.UserLoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CourierShowServlet</servlet-name>
+        <servlet-class>cn.lovedan.controller.CourierShowServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourierQueryServlet</servlet-name>
+        <servlet-class>cn.lovedan.controller.CourierQueryServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourieSendServlet</servlet-name>
+        <servlet-class>cn.lovedan.controller.CourieSendServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourierAcceptServlet</servlet-name>
+        <servlet-class>cn.lovedan.controller.CourierAcceptServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CourierAddServlet</servlet-name>
+        <servlet-class>cn.lovedan.controller.CourierAddServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserRegisterServlet</servlet-name>
         <url-pattern>/register</url-pattern>
@@ -19,5 +39,25 @@
     <servlet-mapping>
         <servlet-name>UserLoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourierShowServlet</servlet-name>
+        <url-pattern>/courierShow</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourierQueryServlet</servlet-name>
+        <url-pattern>/courierQuery</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourieSendServlet</servlet-name>
+        <url-pattern>/courierSend</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourierAcceptServlet</servlet-name>
+        <url-pattern>/courierAccept</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CourierAddServlet</servlet-name>
+        <url-pattern>/courierAdd</url-pattern>
     </servlet-mapping>
 </web-app>

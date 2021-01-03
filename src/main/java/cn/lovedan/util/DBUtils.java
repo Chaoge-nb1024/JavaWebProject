@@ -4,9 +4,7 @@ import org.apache.commons.beanutils.BeanUtils;
 
 import java.io.InputStream;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * jdbc工具类
@@ -145,6 +143,113 @@ public class DBUtils {
             close(conn, ps, rs);
         }
         return instance;
+    }
+
+    /**
+     * 保存用户，并返回用户编号
+     * @param sql SQL语句
+     * @param args SQL语句中限定条件
+     * @param <T> 泛型参数
+     * @return 用户编号
+     */
+    public static <T> Integer updateForPrimary(String sql, Object... args) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Integer primaryKey = null;
+        try{
+            // 获取数据库连接对象
+            connection = getConnection();
+            // SQL 语句预编译, 加上参数 【Statement.RETURN_GENERATED_KEYS】可将主键查询出来
+            ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            // 判断是否对SQL语句中的占位符进行操作
+            if (args != null && args.length > 0){
+                for (int i = 0; i < args.length; i++){
+                    // 判断当前类型，如果是 java.util.Date 类型，转换为 java.sql.Date
+                    if (args[i] instanceof java.util.Date){
+                        java.util.Date date = (java.util.Date) args[i];
+                        args[i] = new java.sql.Date(date.getTime());
+                    }
+                    ps.setObject(i+1, args[i]);
+                }
+            }
+            // 更新数据
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
+            if (rs.next()){
+                primaryKey = rs.getInt(1);
+            }
+
+        } catch(Exception e){
+            e.printStackTrace();
+        } finally{
+            close(connection, ps, rs);
+        }
+        return primaryKey;
+    }
+
+    /**
+     * 用于 SQL 查询，返回查询结果，以集合形式显示
+     * @param clazz 待查询数据的数据类型
+     * @param sql SQL语句
+     * @param args SQL语句限定条件
+     * @param <T> 泛型参数
+     * @return 数据类型为 clazz 型的集合
+     */
+    public static <T> List<T> getList(Class<T> clazz, String sql, Object... args) {
+        Connection connection = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<T> list = null;
+        try {
+            // 获取数据库连接对象
+            connection = DBUtils.getConnection();
+            // SQL语句预编译
+            ps = connection.prepareStatement(sql);
+            // 判断是否对SQL语句中的占位符进行操作
+            if (args != null && args.length > 0){
+                for (int i = 0; i < args.length; i++){
+                    ps.setObject(i+1, args[i]);
+                }
+            }
+            // 获取结果集
+            rs = ps.executeQuery();
+            // 获取结果集元数据
+            ResultSetMetaData metaData = rs.getMetaData();
+            // 获取当前结果集的列数
+            int colNum = metaData.getColumnCount();
+            // 处理结果集
+            list = new ArrayList<>();
+            while(rs.next()){
+                // key 存放列名，value 存放列值。
+                // for 循环完成之后，rowMap 中存放了一条记录
+                Map<String, Object> rowMap = new HashMap<>();
+                for (int i = 1; i <= colNum; i++){
+                    String columnName = metaData.getColumnLabel(i);
+                    Object columnValue = rs.getObject(columnName);
+                    if (columnValue instanceof java.sql.Date){
+                        java.sql.Date date = (java.sql.Date)columnValue;
+                        columnValue = new java.util.Date(date.getTime());
+                    }
+                    rowMap.put(columnName, columnValue);
+                }
+                // 创建一个实例对象
+                T bean = clazz.newInstance();
+                for (Map.Entry<String, Object> entry : rowMap.entrySet()){
+                    String propertyName = entry.getKey();
+                    Object propertyValue = entry.getValue();
+                    // 使用 apache.commons.beanutils 包下的工具类进行对象赋值操作
+                    BeanUtils.setProperty(bean, propertyName, propertyValue);
+                }
+                list.add(bean);
+            }
+            int a = 0;
+        } catch (Exception e){
+            e.printStackTrace();
+        } finally {
+            close(connection, ps, rs);
+        }
+        return list;
     }
 
     /**

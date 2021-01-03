@@ -19,8 +19,6 @@ public class UserDAO {
         }
     }
 
-
-
     /**
      * 判断用户是否存在
      * @param user 待判断的用户

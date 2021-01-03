@@ -1,26 +1,7 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2020/12/30
-  Time: 10:24
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>物流管理系统-注册页面</title>
-    <script>
-        function loadXMLDoc(){
-            var xmlhttp;
-            if (window.XMLHttpRequest) {
-                //  IE7+, Firefox, Chrome, Opera, Safari 浏览器执行代码
-                xmlhttp = new XMLHttpRequest();
-            } else {
-                // IE6, IE5 浏览器执行代码
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-        }
-    </script>
 </head>
 <body>
     <center>
